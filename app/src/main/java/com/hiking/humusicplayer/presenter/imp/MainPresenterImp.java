@@ -6,7 +6,7 @@ import com.hiking.basemvp.imp.BasePresenterImpl;
 import com.hiking.humusicplayer.MainActivity;
 import com.hiking.humusicplayer.bean.IConstant;
 import com.hiking.humusicplayer.bean.MusicInfo;
-import com.hiking.humusicplayer.model.client.PlayServiceManager;
+import com.hiking.humusicplayer.model.client.MusicPlayer;
 import com.hiking.humusicplayer.presenter.IMainPresenter;
 import com.hiking.humusicplayer.util.MusicUtil;
 
@@ -31,7 +31,7 @@ public class MainPresenterImp extends BasePresenterImpl<MainActivity> implements
             @Override
             public void subscribe(ObservableEmitter<List<MusicInfo>> e) throws Exception {
                 List<MusicInfo> list=MusicUtil.queryMusic(mView.getContext().getApplicationContext(), IConstant.START_FROM_LOCAL);
-                PlayServiceManager.mCurrentMusicList =list;
+                MusicPlayer.mCurrentMusicList =list;
                 e.onNext(list);
             }
         })

@@ -13,7 +13,7 @@ import com.hiking.humusicplayer.R;
 import com.hiking.humusicplayer.base.HBaseActivity;
 import com.hiking.humusicplayer.bean.IConstant;
 import com.hiking.humusicplayer.bean.Song;
-import com.hiking.humusicplayer.model.client.PlayServiceManager;
+import com.hiking.humusicplayer.model.client.MusicPlayer;
 import com.hiking.humusicplayer.music_service.PlayServiceCallback;
 
 public class QuickControlsFragment extends BaseFragment implements PlayServiceCallback, View.OnClickListener {
@@ -24,7 +24,8 @@ public class QuickControlsFragment extends BaseFragment implements PlayServiceCa
     private TextView mArtist;
     private ImageView mAlbumArt;
     private ImageView next;
-    ImageView playQueue;
+//    ImageView playQueue;
+    ImageView up;
     View rootView;
     private boolean isPlaying =false;
     private String TAG = "QuickControlsFragment";
@@ -56,13 +57,15 @@ public class QuickControlsFragment extends BaseFragment implements PlayServiceCa
         mArtist = (TextView) rootView.findViewById(R.id.playbar_singer);
         mAlbumArt = (ImageView) rootView.findViewById(R.id.playbar_img);
         next = (ImageView) rootView.findViewById(R.id.play_next);
-        playQueue = (ImageView) rootView.findViewById(R.id.play_list);
+//        playQueue = (ImageView) rootView.findViewById(R.id.play_list);
+        up = (ImageView) rootView.findViewById(R.id.play_up);
         mPlayPause.setOnClickListener(this);
         mTitle.setOnClickListener(this);
         mArtist.setOnClickListener(this);
         mAlbumArt.setOnClickListener(this);
         next.setOnClickListener(this);
-        playQueue.setOnClickListener(this);
+//        playQueue.setOnClickListener(this);
+        up.setOnClickListener(this);
     }
 
     @Override
@@ -83,8 +86,8 @@ public class QuickControlsFragment extends BaseFragment implements PlayServiceCa
             case R.id.play_next:
                 mMusicHandler.sendEmptyMessage(IConstant.CONN_TO_NEXT);
                 break;
-            case R.id.play_list:
-//                mMusicHandler.sendEmptyMessage(IConstant.CONN_TO_PAUSE);
+            case R.id.play_up:
+                mMusicHandler.sendEmptyMessage(IConstant.CONN_TO_UP);
                 break;
             default:
                 break;
@@ -97,15 +100,15 @@ public class QuickControlsFragment extends BaseFragment implements PlayServiceCa
 
     @Override
     public void songChanged(Song song, int index, boolean isNext) {
-        mTitle.setText(PlayServiceManager.mCurrentMusicList.get(index).musicName);
-        mArtist.setText(PlayServiceManager.mCurrentMusicList.get(index).artist);
+        mTitle.setText(MusicPlayer.mCurrentMusicList.get(index).musicName);
+        mArtist.setText(MusicPlayer.mCurrentMusicList.get(index).artist);
     }
 
     @Override
     public void startPlay(Song song, int index, int status) {
-        mTitle.setText(PlayServiceManager.mCurrentMusicList.get(index).musicName);
-        mArtist.setText(PlayServiceManager.mCurrentMusicList.get(index).artist);
-        Log.d(IConstant.TAG,"musicinfo albumData="+PlayServiceManager.mCurrentMusicList.get(index).albumData);
+        mTitle.setText(MusicPlayer.mCurrentMusicList.get(index).musicName);
+        mArtist.setText(MusicPlayer.mCurrentMusicList.get(index).artist);
+        Log.d(IConstant.TAG,"musicinfo albumData="+ MusicPlayer.mCurrentMusicList.get(index).albumData);
         mPlayPause.setImageResource(R.drawable.playbar_btn_pause);
         isPlaying =true;
 

@@ -131,8 +131,8 @@ public class PlayServiceConnection implements ServiceConnection {
         hasConnected = true;
         Log.d(IConstant.TAG,"PlayServiceConnection onServiceConnected sucess");
         mControl = IPlayController.Stub.asInterface(service);
-        PlayServiceManager.PLAYER =mControl;
-        Log.d(IConstant.TAG,"PlayServiceConnection PlayServiceManager.PLAYER 赋值");
+        MusicPlayer.PLAYER =mControl;
+        Log.d(IConstant.TAG,"PlayServiceConnection MusicPlayer.PLAYER 赋值");
 
         try {
             mControl.registerOnPlayStatusChangedListener(mPlayStatusChangedListener);

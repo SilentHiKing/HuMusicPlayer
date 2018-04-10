@@ -14,7 +14,7 @@ import com.hiking.humusicplayer.R;
 import com.hiking.humusicplayer.bean.IConstant;
 import com.hiking.humusicplayer.bean.MusicInfo;
 import com.hiking.humusicplayer.bean.Song;
-import com.hiking.humusicplayer.model.client.PlayServiceManager;
+import com.hiking.humusicplayer.model.client.MusicPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +78,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             Log.e(IConstant.TAG,"歌曲/n"+mMusicInfoList.get(getAdapterPosition()).toString());
             String path=mMusicInfoList.get(getAdapterPosition()).data;
             try {
-                PlayServiceManager.PLAYER.play(new Song(path));
+                MusicPlayer.PLAYER.play(new Song(path));
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

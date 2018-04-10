@@ -34,4 +34,8 @@ public interface IConstant {
     int CONN_TO_NEXT=10;
     int CONN_TO_PLAY=CONN_TO_NEXT+1;
     int CONN_TO_PAUSE=CONN_TO_NEXT+2;
+    int CONN_TO_UP=CONN_TO_NEXT+3;
+
+    public class CONN_TO_UP {
+    }
 }

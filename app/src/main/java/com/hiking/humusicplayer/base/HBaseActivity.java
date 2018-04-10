@@ -15,8 +15,8 @@ import com.hiking.humusicplayer.IPlayController;
 import com.hiking.humusicplayer.R;
 import com.hiking.humusicplayer.bean.IConstant;
 import com.hiking.humusicplayer.bean.Song;
+import com.hiking.humusicplayer.model.client.MusicPlayer;
 import com.hiking.humusicplayer.model.client.PlayServiceConnection;
-import com.hiking.humusicplayer.model.client.PlayServiceManager;
 import com.hiking.humusicplayer.view.fragment.QuickControlsFragment;
 
 /**
@@ -25,7 +25,6 @@ import com.hiking.humusicplayer.view.fragment.QuickControlsFragment;
 
 public abstract class HBaseActivity<T extends IPresenter> extends BaseActivity<T> {
     public static IPlayController mPlayController;
-    PlayServiceManager mPlayServiceManager;
     private QuickControlsFragment fragment; //底部播放控制栏
     HandlerThread thread;
 
@@ -57,13 +56,12 @@ public abstract class HBaseActivity<T extends IPresenter> extends BaseActivity<T
         super.initEvent();
         showQuickControl(true);
 
-        mPlayServiceManager=new PlayServiceManager(getApplicationContext());
         final PlayServiceConnection connection=new PlayServiceConnection(fragment,this);
         new Thread(){
             @Override
             public void run() {
                 super.run();
-                mPlayServiceManager.bindService(connection);
+                MusicPlayer.getInstance(getApplicationContext()).bindService(connection);
             }
         }.start();
 
@@ -140,14 +138,14 @@ public abstract class HBaseActivity<T extends IPresenter> extends BaseActivity<T
             switch (msg.what){
                 case IConstant.CONN_TO_NEXT:
                     try {
-                        PlayServiceManager.PLAYER.play(PlayServiceManager.PLAYER.next());
+                        MusicPlayer.PLAYER.play(MusicPlayer.PLAYER.next());
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
                     break;
                 case IConstant.CONN_TO_PAUSE:
                     try {
-                        PlayServiceManager.PLAYER.pause();
+                        MusicPlayer.PLAYER.pause();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -155,16 +153,20 @@ public abstract class HBaseActivity<T extends IPresenter> extends BaseActivity<T
                 case IConstant.CONN_TO_PLAY:
                     try {
                         if (msg.obj instanceof Song){
-                            PlayServiceManager.PLAYER.play((Song)msg.obj);
+                            MusicPlayer.PLAYER.play((Song)msg.obj);
                         }else{
-                            PlayServiceManager.PLAYER.resume();
-
+                            MusicPlayer.PLAYER.resume();
                         }
-
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
                     break;
+                case IConstant.CONN_TO_UP:
+                    try {
+                        MusicPlayer.PLAYER.play(MusicPlayer.PLAYER.pre());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                 default:
                     break;
             }

@@ -54,14 +54,23 @@
         </LinearLayout>
 
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/play_list"
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="click_last"
             android:backgroundTint="@color/theme_color_primary"
-            android:src="@drawable/playbar_btn_playlist" />
+            android:src="@drawable/playbar_btn_playlist" />-->
+
+        <ImageView
+            android:id="@+id/play_up"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="click_up"
+            android:backgroundTint="@color/theme_color_primary"
+            android:src="@drawable/playbar_btn_up" />
 
         <ImageView
             android:id="@+id/control"
